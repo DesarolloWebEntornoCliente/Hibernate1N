@@ -20,6 +20,8 @@ import es.altair.bean.Jugador;
 import es.altair.dao.ConexionDAO;
 import es.altair.dao.EquiposDAO;
 import es.altair.dao.EquiposDAOImplHibernate;
+import es.altair.dao.JugadorDAO;
+import es.altair.dao.JugadorDAOImplHibernate;
 
 
 public class App 
@@ -30,6 +32,8 @@ public class App
 	private static Scanner tecladoInt = new Scanner(System.in);
 	
 	private static EquiposDAO equipoDAO = new EquiposDAOImplHibernate();
+	private static JugadorDAO jugadorDAO = new JugadorDAOImplHibernate(); 
+
 
 
     public static void main( String[] args )
@@ -57,19 +61,25 @@ public class App
  					   int numSocios = tecladoInt.nextInt();
  					   
 				        Equipos e = new Equipos(nombre,ciudad,numSocios);
+	 				    Session sesion = ConexionDAO.abrirConexion();
 
- 				       Session sesion = ConexionDAO.abrirConexion();
- 		                
- 				        
- 				        sesion.save(e);
- 				        
- 				        sesion.getTransaction().commit();
+				        try {
+		 		                
+		 				        
+		 				        sesion.save(e);
+		 				        
+		 				        sesion.getTransaction().commit();
+						} finally {
+							
+	 	  				      ConexionDAO.desconectar(sesion);
+	 	 				        //sessionFactory.close();
+
+						}
+
  				        
  				      //ConexionDAO.desconectar(sesion, sessionFactory);
  				        
- 	  				      ConexionDAO.desconectar(sesion);
  				        
- 				        //sessionFactory.close();
  				      
  				      System.out.println("Equipo Insertado Corretamente !!!");
 
@@ -141,12 +151,51 @@ public class App
 
   				   
   				   
+  				      ///////// insertar un jugador /////
+   					//Equipos eq1 = new Equipos(17,"Ponte Preta","Aracatuba",895);
+
+ 				      
+ 				      Equipos eq1 = equipoDAO.colectarDatos(); // debe pasar el id que quires sacar //
+ 				      Jugador j4 = new Jugador("Joaozinho","Defensa", eq1);
+
+ 				      
+ 				      // para guardar solo un jugador, tiene que que sacar el equipo de la base ///
+ 				     //equipoDAO.save(eq1); 
+ 				    //  jugadorDAO.save(j4);
+  				      
+ 				      
+ 				      
+  				      
+  				      
+  				      
   				   break;
  				case 4:
+				      Equipos eq2 = equipoDAO.colectarDatos(); // debe pasar el id que quires sacar //
+
+				      Jugador j5 = new Jugador("Joaozinho","Defensa", eq2);
+				      jugadorDAO.update(j5);
+				      
+				      
+
+ 						j5.setNombre("Nome a altarar");
+ 						
+ 						// em metodo update//
+ 						
+ 						
+ 						
+ 						
+ 					
+ 					
  					break;
  				case 5:
+ 					
+ 					//	equipoDAO.borrarEquipo(eq3);
+ 					
  					break;
  				case 6:
+ 					
+ 					// jugadorDAO.borrarJugador(j6);
+ 					
  					break;
  				case 7:
  					/*	int miIdEquipo = 16;

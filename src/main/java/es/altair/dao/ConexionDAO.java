@@ -9,8 +9,6 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
-//private static Connection conexion;
-
 public class ConexionDAO {
 
 	public static Session abrirConexion() {

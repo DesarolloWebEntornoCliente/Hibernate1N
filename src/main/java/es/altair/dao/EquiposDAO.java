@@ -13,4 +13,6 @@ public interface EquiposDAO {
 	public Equipos obtenerEquipos(int idEquipo);
 	
 	public List<Equipos> listaEquipos();
+	
+	
  }
